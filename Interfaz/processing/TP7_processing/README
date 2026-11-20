@@ -1,0 +1,22 @@
+## Cómo replicar el experimento (Configuración de Processing)
+
+Si querés correr este proyecto en tu computadora, tenés que seguir estos pasos antes de darle **Run** en Processing:
+
+1. **Subir primero el código al ESP32:**
+   * Abrí el archivo `.ino` en Arduino IDE, seleccioná la placa **DOIT ESP32 DEVKIT V1** y subí el firmware.
+   * **Importante:** Cerrá el *Monitor Serie* de Arduino IDE antes de abrir Processing; si queda abierto, bloquea el puerto COM y Processing tira error de puerto ocupado (*Port busy*).
+
+2. **Respetar el nombre de la carpeta del sketch:**
+   * Processing exige que el archivo `.pde` esté guardado dentro de una carpeta con **exactamente el mismo nombre** (por ejemplo: `tp7_processing/tp7_processing.pde`). Si movés el archivo suelto, Processing te va a pedir crear esa carpeta automáticamente al abrirlo.
+
+3. **Ajustar el puerto COM en el código:**
+   * En el `setup()` del archivo `.pde`, revisá la línea donde se abre el puerto serie:
+     ```java
+     // Ejemplo en Windows (cambiá "COM5" por el puerto de tu ESP32):
+     puerto = new Serial(this, "COM5", 115200);
+     ```
+   * Para saber qué puerto te asignó Windows, mirá abajo a la derecha en Arduino IDE o abrí el **Administrador de dispositivos → Puertos (COM y LPT)** (aparece como *Silicon Labs CP210x* o *USB-SERIAL CH340*). En Linux/macOS suele ser `"/dev/ttyUSB0"` o `"/dev/cu.usbserial-..."`.
+   * Asegurate de mantener la velocidad en **`115200`** baudios para que coincida con el `Serial.begin(115200)` del ESP32.
+
+4. **Ejecutar la interfaz:**
+   * Con el ESP32 conectado por USB, presioná el botón **Play ** en Processing. Si todo está bien configurado, los indicadores responden al instante al apretar los pulsadores físicos o hacer clic en los círculos `L1` y `L2`.
